@@ -28,3 +28,6 @@ std_handler.setFormatter(formatter)
 logger.addHandler(std_handler)
 
 from vataga_games_catalogue.views import main # noqa
+
+from vataga_games_catalogue.models import Image, Game # noqa
+db.create_all()

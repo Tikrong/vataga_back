@@ -27,22 +27,19 @@ class Game(db.Model):
                                  minTime=game['minTime'], maxTime=game['maxTime'], difficulty=game['difficulty'],
                                  description=game['description'])
                     session.add(game_entry)
+                    session.commit()
 
                     for img in game['src']:
                         img_entry = Image(gameId=game_entry.id, src=img.split("/")[1])
                         session.add(img_entry)
 
                     counter += 1
+                    session.commit()
 
                 except Exception as e:
-                    logger.error(f"Couldn't add {game} to session, got error {e}")
+                    logger.error(f"Couldn't add {game} to db, got error {e}")
 
-            try:
-                session.commit()
                 return counter
-
-            except Exception as e:
-                logger.error(f"Couldn't commit games to db, got error {e}")
 
     @staticmethod
     def get_games():
