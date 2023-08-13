@@ -1,5 +1,6 @@
 import os
 
+
 class BaseConfig:
 
     APP_PORT = os.environ.get("APP_PORT", default="8000")
@@ -12,4 +13,6 @@ class BaseConfig:
 
     JSON_SORT_KEYS = False
 
+
+class DevConfig(BaseConfig):
     DEBUG = True
