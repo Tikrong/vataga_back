@@ -13,6 +13,8 @@ class BaseConfig:
 
     JSON_SORT_KEYS = False
 
+    IMAGES_LINK = 'https://raw.githubusercontent.com/vataga1/storage/main/'
+
 
 class DevConfig(BaseConfig):
     DEBUG = True

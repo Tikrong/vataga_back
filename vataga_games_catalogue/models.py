@@ -1,5 +1,6 @@
 from vataga_games_catalogue import app, logger, db, sql_engine
 from sqlalchemy.orm import Session
+from urllib.parse import urljoin
 
 
 class Game(db.Model):
@@ -28,7 +29,6 @@ class Game(db.Model):
                     session.add(game_entry)
 
                     for img in game['src']:
-                        print(game_entry.id)
                         img_entry = Image(gameId=game_entry.id, src=img.split("/")[1])
                         session.add(img_entry)
 
@@ -47,15 +47,16 @@ class Game(db.Model):
     @staticmethod
     def get_games():
         """метод для получения списка игр из базы данных"""
+        img_link = app.config.get('IMAGES_LINK')
         with Session(sql_engine) as session:
 
             images = {}
             results = session.query(Image).all()
             for result in results:
                 if result.gameId in images:
-                    images[result.gameId].append(result.src)
+                    images[result.gameId].append(urljoin(img_link, result.src))
                 else:
-                    images[result.gameId] = [result.src]
+                    images[result.gameId] = [urljoin(img_link, result.src)]
 
             results = session.query(Game).all()
             games = []
